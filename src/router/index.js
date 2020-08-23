@@ -3,12 +3,37 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
-
+// 驼峰转换连接线
+function toLineLink(name) {
+  if (!name) {
+    return "";
+  } else {
+    name = name.charAt(0).toLowerCase() + name.slice(1); //把第一个字母转换为小写
+    return name.replace(/([A-Z])/g, "-$1").toLowerCase(); //把大写转换为连字符
+  }
+}
+const childrenRouteConfig = [
+  {
+    name: "SlotUse",
+    desc: "作用域插槽使用"
+  },
+  {
+    name: "SlotCardDemo",
+    desc: "作用域插槽卡片示例理解"
+  }
+];
+const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
+  path: `${toLineLink(name)}`, //作用于插槽使用
+  name: toLineLink(name),
+  component: () => import(`../views/${name}/App.vue`),
+  meta: { desc }
+}));
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+    children: childrenRoute
   }
   // {
   //   path: "/about",
