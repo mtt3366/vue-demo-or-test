@@ -20,6 +20,10 @@ const childrenRouteConfig = [
   {
     name: "SlotCardDemo",
     desc: "作用域插槽卡片示例理解"
+  },
+  {
+    name: "AntdUse",
+    desc: "antd使用测试"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({

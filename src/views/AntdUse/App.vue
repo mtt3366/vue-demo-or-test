@@ -5,7 +5,7 @@
 <script>
 import Demo from "./Demo";
 export default {
-  name: "TemplateDemo",
+  name: "AntdUse",
   components: {
     Demo
   }
