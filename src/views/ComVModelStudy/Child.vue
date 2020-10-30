@@ -19,9 +19,14 @@ export default {
   },
   methods: {
     handleClick(type) {
+      //在emit之前进行数据控制
+      let val = this.value[`childValue${type}`] + "我使劲点了一下";
+      if (type === 1) {
+        val = this.value[`childValue${type}`] + "我轻松点了1下";
+      }
       this.$emit("input", {
         ...this.value,
-        [`childValue${type}`]: this.value[`childValue${type}`] + "我点了1下"
+        [`childValue${type}`]: val
       });
     }
   }
