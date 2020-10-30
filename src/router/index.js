@@ -16,6 +16,14 @@ const childrenRouteConfig = [
   {
     name: "AntdUse",
     desc: "antd使用测试"
+  },
+  {
+    name: "ComStudy",
+    desc: "v-model组件开发学习,可控,不可控"
+  },
+  {
+    name: "ComVModelStudy",
+    desc: "组件上使用v-model"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
