@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "Demo",
+  name: "Demo", // todo
   components: {}
 };
 </script>
