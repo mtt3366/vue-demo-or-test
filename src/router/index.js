@@ -24,6 +24,14 @@ const childrenRouteConfig = [
   {
     name: "ComVModelStudy",
     desc: "组件上使用v-model"
+  },
+  {
+    name: "TickPrice",
+    desc: "拟售价业务组件"
+  },
+  {
+    name: "ChgPushTick",
+    desc: "选择要提交的票号"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
