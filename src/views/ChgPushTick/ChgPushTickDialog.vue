@@ -72,9 +72,11 @@ export default {
     visible(newValue) {
       console.log("newValue", newValue);
       this.myVisible = newValue;
+      this.cur = true; //每次都打开数字那一面
+      this.curPushNum = this.allTickNo.length;
     },
-    allTickNo(newValue){
-      this.curPushNum = newValue.length
+    allTickNo(newValue) {
+      this.curPushNum = newValue.length;
     }
   },
   methods: {

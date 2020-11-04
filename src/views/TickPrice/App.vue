@@ -1,0 +1,31 @@
+<template>
+  <TickPrice v-model="tickData" :ticketAmount="9" />
+</template>
+
+<script>
+import TickPrice from "./TickPrice"; // todo
+export default {
+  name: "TemplateDemo", // todo
+  components: {
+    TickPrice // todo
+  },
+  data() {
+    return {
+      tickData: {
+        //拟售价三种方式
+        type: 2, //拟售价类型 1,2,3,4(无)
+        lakhDebit: "", //拟售价每十万扣款2
+
+        point: "", //拟售价年息+手续费 3
+        handleCharge: "", //手续费
+
+        directDeduction: "", //拟售价直扣 1
+
+        pointDay: "" //拟售价5 年息加天数中的天数}}
+      }
+    };
+  }
+};
+</script>
+
+<style scoped></style>
