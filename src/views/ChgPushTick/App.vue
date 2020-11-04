@@ -5,6 +5,7 @@
       :all-tick-no="tickNo"
       @change="handleChange"
       :visible="dialogPushNumVisible"
+      @close="dialogPushNumVisible = false"
     />
   </div>
 </template>

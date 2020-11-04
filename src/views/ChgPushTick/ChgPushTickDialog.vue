@@ -1,6 +1,10 @@
 <template>
   <div class="">
-    <el-dialog title="请输入发布张数或选择发布票号" :visible.sync="visible">
+    <el-dialog
+      title="请输入发布张数或选择发布票号"
+      :visible.sync="myVisible"
+      @close="$emit('close')"
+    >
       <button @click="cur = !cur">切换</button>
       <div v-show="cur">
         <el-input-number
@@ -22,7 +26,7 @@
         </el-table>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogPushNumVisible = false">取 消</el-button>
+        <el-button @click="$emit('close')">取 消</el-button>
         <el-button type="primary" @click="handlePushNumConfirm"
           >确 定</el-button
         >
@@ -53,6 +57,7 @@ export default {
   },
   data() {
     return {
+      myVisible: false,
       cur: true, //true 代表选择数量,false代表选择票号
       curPushNum: this.allTickNo.length,
       selTickNos: []
@@ -61,6 +66,15 @@ export default {
   computed: {
     pushTickTableData() {
       return this.allTickNo.map(ele => ({ ticketNo: ele }));
+    }
+  },
+  watch: {
+    visible(newValue) {
+      console.log("newValue", newValue);
+      this.myVisible = newValue;
+    },
+    allTickNo(newValue){
+      this.curPushNum = newValue.length
     }
   },
   methods: {
