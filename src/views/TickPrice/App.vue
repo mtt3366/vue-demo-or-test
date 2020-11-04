@@ -1,19 +1,19 @@
 <template>
-  <TickPrice v-model="tickData" :ticketAmount="9" />
+  <TickPrice v-model="tickPrice" :showZk="true" />
 </template>
 
 <script>
 import TickPrice from "./TickPrice"; // todo
 export default {
-  name: "TemplateDemo", // todo
+  name: "TickPriceMain", // todo
   components: {
     TickPrice // todo
   },
   data() {
     return {
-      tickData: {
+      tickPrice: {
         //拟售价三种方式
-        type: 2, //拟售价类型 1,2,3,4(无)
+        type: 2, //拟售价类型 1,2,3,4(无),5
         lakhDebit: "", //拟售价每十万扣款2
 
         point: "", //拟售价年息+手续费 3

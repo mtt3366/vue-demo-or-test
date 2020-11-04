@@ -1,23 +1,75 @@
 <template>
   <div class="tick-price-toggle-input">
-    <el-input
-      v-show="myData.type === 2"
-      placeholder="每十万扣款"
-      size="mini"
-    ></el-input>
+    <div v-show="myData.type === 2" class="item-wrap">
+      <el-input
+        placeholder="每十万扣款"
+        :value="myData.lakhDebit"
+        class="input1"
+        @input="
+          e => {
+            handleInput(e, 'lakhDebit');
+          }
+        "
+      />
+    </div>
 
-    <div v-show="myData.type === 3">
-      <el-input placeholder="年息" size="mini"></el-input>+
-      <el-input placeholder="手续费" size="mini"></el-input>
+    <div v-show="myData.type === 3" class="item-wrap">
+      <el-input
+        placeholder="年息"
+        :value="myData.point"
+        class="input2"
+        @input="
+          e => {
+            handleInput(e, 'point');
+          }
+        "
+      />%+
+      <el-input
+        placeholder="手续费"
+        :value="myData.handleCharge"
+        class="input3"
+        @input="
+          e => {
+            handleInput(e, 'handleCharge');
+          }
+        "
+      />
     </div>
-    <div v-show="myData.type === 1">
-      <el-input placeholder="直扣" size="mini"></el-input>
+    <div v-show="myData.type === 1" class="item-wrap">
+      <el-input
+        placeholder="直扣"
+        class="input1"
+        :value="myData.directDeduction"
+        @input="
+          e => {
+            handleInput(e, 'directDeduction');
+          }
+        "
+      />
     </div>
-    <div v-show="myData.type === 5">
-      <el-input placeholder="年息" size="mini"></el-input>+
-      <el-input placeholder="天数" size="mini"></el-input>
+    <div v-show="myData.type === 5" class="item-wrap">
+      <el-input
+        placeholder="年息"
+        :value="myData.point"
+        class="input2"
+        @input="
+          e => {
+            handleInput(e, 'point');
+          }
+        "
+      />%+
+      <el-input
+        placeholder="天数"
+        :value="myData.pointDay"
+        class="input3"
+        @input="
+          e => {
+            handleInput(e, 'pointDay');
+          }
+        "
+      />
     </div>
-    <button @click="toggle">改变</button>
+    <span @click="toggle" class="toggle">改</span>
   </div>
 </template>
 
@@ -44,11 +96,12 @@ export default {
         };
       }
     },
-    ticketAmount: {
-      type: Number,
+    showZk: {
+      //是否显示直扣
+      type: Boolean,
       required: true,
       default() {
-        return 0;
+        return true;
       }
     }
   },
@@ -67,10 +120,92 @@ export default {
     toggle() {
       this.myData.type = this.reverseMap[this.myData.type];
       this.$emit("input", this.myData);
+    },
+    handleInput(e, type) {
+      let returnVal = "";
+      switch (type) {
+        case "lakhDebit":
+        case "handleCharge":
+        case "directDeduction":
+          returnVal = this.formatInputNumber(e, false, 2);
+          break;
+        case "point":
+          returnVal = this.formatInputNumber(e, false, 4);
+          break;
+        case "pointDay":
+          returnVal = this.formatInputNumber(e, true);
+          break;
+      }
+      this.myData[`${type}`] = returnVal;
+      this.$emit("input", this.myData);
+    },
+    formatInputNumber(numberInput = "", isInt = false, pointNum = 6) {
+      if (isInt) {
+        return String(numberInput)
+          .replace(/\D/g, "")
+          .replace(/^0+([^.])/, "$1");
+      }
+      numberInput = String(numberInput).replace(/[^\d.]/g, "");
+      const numberArr = numberInput.split(".");
+      if (numberArr.length > 2) {
+        numberArr.splice(2, numberArr.length);
+      }
+      if (numberArr.length > 1 && numberArr[0] === "") {
+        numberArr[0] = "0";
+      }
+      if (numberArr[0]) {
+        numberArr[0] = numberArr[0].replace(/^0+([^0])/, "$1");
+      }
+      if (numberArr[1] && numberArr[1].length > pointNum) {
+        numberArr[1] = numberArr[1].slice(0, pointNum);
+      }
+      return numberArr.join(".") || undefined;
+    },
+    formatInputFloat(numberInput = "", isInt = false, decimalNumber = 6) {
+      if (isInt) {
+        return String(numberInput)
+          .replace(/\D/g, "")
+          .replace(/^0+/, "");
+      }
+      numberInput = String(numberInput);
+      numberInput = numberInput.replace(/[^\d.]/g, "");
+      numberInput = numberInput.replace(/^\./g, "");
+      numberInput = numberInput.replace(/\.{2,}/g, ".");
+      numberInput = numberInput
+        .replace(".", "$#$")
+        .replace(/\./g, "")
+        .replace("$#$", ".");
+      let numberRes = "";
+      if (numberInput !== "") {
+        const reg = new RegExp(
+          "^\\+?(\\d*\\.\\d{" + (decimalNumber + 1) + "})$"
+        );
+        if (reg.test(numberInput)) {
+          numberRes = this.toDecimal(numberInput, decimalNumber);
+          numberRes = +numberRes;
+        } else {
+          numberRes = numberInput;
+        }
+      }
+      return numberRes;
+    },
+    //保留多位小数
+    toDecimal(x = "", decimalNumer = 2) {
+      let x1 = "";
+      let num = 0;
+      if (typeof x == "string") {
+        num = parseFloat(x);
+      } else {
+        num = x;
+      }
+      let multiplyNumber = Math.pow(10, decimalNumer);
+      x1 = Math.floor(num * multiplyNumber) / multiplyNumber;
+      x1 = parseFloat(x1.toFixed(decimalNumer));
+      return x1;
     }
   },
   mounted() {
-    if (this.ticketAmount > 10) {
+    if (!this.showZk) {
       this.reverseMap = {
         2: 3,
         3: 5,
@@ -81,7 +216,44 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .tick-price-toggle-input {
+  width: 155px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.tick-price-toggle-input .toggle {
+  margin-left: 5px;
+  background: pink;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+.tick-price-toggle-input .item-wrap {
+  width: 120px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.tick-price-toggle-input input.el-input__inner {
+  //width: 120px;
+  height: 30px;
+  background-color: #fafafa;
+  border-radius: 4px;
+  border: solid 1px #dbdbdb;
+  padding: 0 3px;
+  font-size: 14px;
+  color: #999999;
+}
+.tick-price-toggle-input .input1 {
+  width: 120px;
+}
+.tick-price-toggle-input .input2 {
+  width: 40px;
+}
+.tick-price-toggle-input .input3 {
+  width: 50px;
 }
 </style>
