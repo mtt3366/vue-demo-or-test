@@ -1,75 +1,83 @@
 <template>
   <div class="tick-price-toggle-input">
-    <div v-show="myData.type === 2" class="item-wrap">
-      <el-input
-        placeholder="每十万扣款"
-        :value="myData.lakhDebit"
-        class="input1"
-        @input="
-          e => {
-            handleInput(e, 'lakhDebit');
-          }
-        "
-      />
-    </div>
+    <div class="tog-area">
+      <div v-show="myData.type === 2" class="item-wrap">
+        <el-input
+          placeholder="每十万扣款"
+          :value="myData.lakhDebit"
+          class="input1"
+          @input="
+            e => {
+              handleInput(e, 'lakhDebit');
+            }
+          "
+        />
+      </div>
 
-    <div v-show="myData.type === 3" class="item-wrap">
-      <el-input
-        placeholder="年息"
-        :value="myData.point"
-        class="input2"
-        @input="
-          e => {
-            handleInput(e, 'point');
-          }
-        "
-      />%+
-      <el-input
-        placeholder="手续费"
-        :value="myData.handleCharge"
-        class="input3"
-        @input="
-          e => {
-            handleInput(e, 'handleCharge');
-          }
-        "
-      />
+      <div v-show="myData.type === 3" class="item-wrap">
+        <el-input
+          placeholder="年息"
+          :value="myData.point"
+          class="input2"
+          @input="
+            e => {
+              handleInput(e, 'point');
+            }
+          "
+        />%+
+        <el-input
+          placeholder="手续费"
+          :value="myData.handleCharge"
+          class="input3"
+          @input="
+            e => {
+              handleInput(e, 'handleCharge');
+            }
+          "
+        />
+      </div>
+      <div v-show="myData.type === 1" class="item-wrap">
+        <el-input
+          placeholder="直扣"
+          class="input1"
+          :value="myData.directDeduction"
+          @input="
+            e => {
+              handleInput(e, 'directDeduction');
+            }
+          "
+        />
+      </div>
+      <div v-show="myData.type === 5" class="item-wrap">
+        <el-input
+          placeholder="年息"
+          :value="myData.point"
+          class="input2"
+          @input="
+            e => {
+              handleInput(e, 'point');
+            }
+          "
+        />%+
+        <el-input
+          placeholder="天数"
+          :value="myData.pointDay"
+          class="input3"
+          @input="
+            e => {
+              handleInput(e, 'pointDay');
+            }
+          "
+        />
+      </div>
+      <span @click="toggle" class="toggle">改</span>
     </div>
-    <div v-show="myData.type === 1" class="item-wrap">
-      <el-input
-        placeholder="直扣"
-        class="input1"
-        :value="myData.directDeduction"
-        @input="
-          e => {
-            handleInput(e, 'directDeduction');
-          }
-        "
-      />
+    <div
+      v-show="showKou && (myData.type === 3 || myData.type === 5)"
+      class="text-area"
+    >
+      每十万扣:{{ kou1 }} 元/每十万
     </div>
-    <div v-show="myData.type === 5" class="item-wrap">
-      <el-input
-        placeholder="年息"
-        :value="myData.point"
-        class="input2"
-        @input="
-          e => {
-            handleInput(e, 'point');
-          }
-        "
-      />%+
-      <el-input
-        placeholder="天数"
-        :value="myData.pointDay"
-        class="input3"
-        @input="
-          e => {
-            handleInput(e, 'pointDay');
-          }
-        "
-      />
-    </div>
-    <span @click="toggle" class="toggle">改</span>
   </div>
 </template>
 
@@ -102,6 +110,37 @@ export default {
       required: true,
       default() {
         return true;
+      }
+    },
+    showKou: {
+      //是否显示计算值
+      type: Boolean,
+      required: true,
+      default() {
+        return true;
+      }
+    },
+    needData: {
+      type: Object,
+      required: true,
+      default() {
+        return {
+          ticketAmount: 0, //金额
+          adjustmentDays: 0, //调整天
+          interestDays: 0 //剩余天数
+        };
+      }
+    }
+  },
+  computed: {
+    kou1() {
+      const { point, handleCharge, pointDay } = this.myData;
+      if (this.myData.type === 3) {
+        return this.calculateNianxiAndHandleCharge(point, handleCharge);
+      } else if (this.myData.type === 5) {
+        return this.calculateNianxiAndDays(point, pointDay);
+      } else {
+        return 0;
       }
     }
   },
@@ -138,6 +177,52 @@ export default {
       }
       this.myData[`${type}`] = returnVal;
       this.$emit("input", this.myData);
+    },
+    /**
+     * @param {*} nianXi 年息）
+     * @param {*} addDays 新增天数(是输入的天数)
+     */
+    calculateNianxiAndDays(nianXi, addDays) {
+      console.log("------", nianXi);
+      console.log(addDays);
+      if (
+        nianXi === "" ||
+        typeof nianXi == "undefined" ||
+        addDays === "" ||
+        typeof addDays == "undefined"
+      ) {
+        return "-";
+      }
+      const ticketAmount = parseFloat(this.needData.ticketAmount) * 10000;
+      nianXi = parseFloat(nianXi) / 100;
+      const interestDays = parseFloat(this.needData.interestDays);
+      const adjustmentDays = parseFloat(this.needData.adjustmentDays);
+      addDays = parseFloat(addDays);
+      const result =
+        (ticketAmount * nianXi * (interestDays + adjustmentDays + addDays)) /
+        360 /
+        (ticketAmount / 100000);
+      return result.toFixed(2);
+    },
+    calculateNianxiAndHandleCharge(nianXi, handleCharge) {
+      if (
+        nianXi === "" ||
+        typeof nianXi == "undefined" ||
+        handleCharge === "" ||
+        typeof handleCharge == "undefined"
+      ) {
+        return "-";
+      }
+      const ticketAmount = parseFloat(this.needData.ticketAmount) * 10000;
+      nianXi = parseFloat(nianXi) / 100;
+      const interestDays = parseFloat(
+        this.needData.interestDays === 0 ? 1 : this.needData.interestDays
+      );
+      const result =
+        ((ticketAmount * nianXi * interestDays) / 360 +
+          (handleCharge * ticketAmount) / 100000) /
+        (ticketAmount / 100000);
+      return result.toFixed(2);
     },
     formatInputNumber(numberInput = "", isInt = false, pointNum = 6) {
       if (isInt) {
@@ -217,7 +302,7 @@ export default {
 </script>
 
 <style>
-.tick-price-toggle-input {
+.tick-price-toggle-input .tog-area {
   width: 155px;
   display: flex;
   justify-content: space-around;
@@ -255,5 +340,10 @@ export default {
 }
 .tick-price-toggle-input .input3 {
   width: 50px;
+}
+.tick-price-toggle-input .text-area {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #ff6700;
 }
 </style>

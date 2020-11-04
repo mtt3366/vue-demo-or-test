@@ -1,5 +1,14 @@
 <template>
-  <TickPrice v-model="tickPrice" :showZk="true" />
+  <TickPrice
+    v-model="tickPrice"
+    :need-data="{
+      ticketAmount: 11.9021,
+      adjustmentDays: 0,
+      interestDays: 366
+    }"
+    :showZk="true"
+    :showKou="true"
+  />
 </template>
 
 <script>
