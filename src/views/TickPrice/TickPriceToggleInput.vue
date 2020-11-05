@@ -83,7 +83,7 @@
 
 <script>
 export default {
-  name: "TickPrice", // todo
+  name: "tick-price-toggle-input", // todo
   components: {},
   props: {
     value: {
@@ -323,7 +323,7 @@ export default {
   align-items: center;
 }
 .tick-price-toggle-input input.el-input__inner {
-  //width: 120px;
+  /* width: 120px; */
   height: 30px;
   background-color: #fafafa;
   border-radius: 4px;

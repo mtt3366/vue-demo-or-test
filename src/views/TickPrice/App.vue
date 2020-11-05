@@ -1,5 +1,5 @@
 <template>
-  <TickPrice
+  <tick-price-toggle-input
     v-model="tickPrice"
     :need-data="{
       ticketAmount: 11.9021,
@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import TickPrice from "./TickPrice"; // todo
+import TickPriceToggleInput from "./TickPriceToggleInput"; // todo
 export default {
   name: "TickPriceMain", // todo
   components: {
-    TickPrice // todo
+    TickPriceToggleInput // todo
   },
   data() {
     return {
