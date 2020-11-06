@@ -32,6 +32,10 @@ const childrenRouteConfig = [
   {
     name: "ChgPushTick",
     desc: "选择要提交的票号"
+  },
+  {
+    name: "MutiSetMsgDilg",
+    desc: "批量设置"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
