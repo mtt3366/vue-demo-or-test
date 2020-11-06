@@ -107,17 +107,17 @@ export default {
     showZk: {
       //是否显示直扣
       type: Boolean,
-      required: true,
+      required: false,
       default() {
-        return true;
+        return false;
       }
     },
     showKou: {
       //是否显示计算值
       type: Boolean,
-      required: true,
+      required: false,
       default() {
-        return true;
+        return false;
       }
     },
     needData: {

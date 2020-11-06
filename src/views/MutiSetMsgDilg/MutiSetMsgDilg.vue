@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="muti-set-msg-dilg">
     <el-dialog
       title="批量设置信息"
       :visible.sync="myVisible"
@@ -10,6 +10,7 @@
         <el-select
           v-model="myData.buyUserId"
           placeholder="请选择入库人"
+          size="small"
           filterable
           @change="
             id => {
@@ -29,6 +30,7 @@
         <el-select
           v-model="myData.sellUserId"
           placeholder="请选择挂票人"
+          size="small"
           filterable
           @change="
             id => {
@@ -47,19 +49,46 @@
       </div>
       <div class="row">
         拟售价
-        <tick-price-toggle-input
-          :value="myData.sellTickPrice"
-          @input="myData.sellTickPrice = $event"
-          :showZk="false"
-          :showKou="false"
-        />
+        <tick-price-toggle-input v-model="myData.sellTickPrice" />
       </div>
-
+      <div class="row">
+        购入价
+        <tick-price-toggle-input v-model="myData.buyTickPrice" />
+      </div>
+      <div class="row">
+        票源客户
+        <el-input size="small" v-model="myData.ticketClient"></el-input>
+        占资类型
+        <el-select v-model="myData.capitalType" size="small">
+          <el-option label="占资" :value="'1'"> </el-option>
+          <el-option label="不占资" :value="'0'"> </el-option>
+        </el-select>
+      </div>
+      <div class="row">
+        备注
+        <el-input
+          size="small"
+          type="textarea"
+          :rows="2"
+          v-model="myData.commons"
+          maxlength="50"
+          show-word-limit
+        ></el-input>
+      </div>
+      <div class="row">
+        内部记事
+        <el-input
+          size="small"
+          type="textarea"
+          :rows="2"
+          v-model="myData.internalCommons"
+          maxlength="50"
+          show-word-limit
+        ></el-input>
+      </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="$emit('close')">取 消</el-button>
-        <el-button type="primary" @click="$emit('change', myData)"
-          >确 定
-        </el-button>
+        <el-button type="primary" @click="handleConfirm">确 定 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -118,8 +147,7 @@ export default {
         commons: "", //备注
         internalCommons: "" //内部记事
       },
-      persionOp: [],
-      value: ""
+      persionOp: []
     };
   },
   computed: {},
@@ -165,6 +193,19 @@ export default {
       console.log(id, type);
       this.myData[`${type}UserName`] =
         this.persionOp.find(ele => ele.value === id).label || "";
+    },
+    handleConfirm() {
+      //buyUserId{}: null, //入库人id
+      // sellUserId: null, //挂票人id)
+      if (!this.myData.buyUserId) {
+        alert("请选择入库人");
+        return;
+      }
+      if (!this.myData.sellUserId) {
+        alert("请选择挂票人");
+        return;
+      }
+      this.$emit("change", this.myData);
     }
   },
   mounted() {
