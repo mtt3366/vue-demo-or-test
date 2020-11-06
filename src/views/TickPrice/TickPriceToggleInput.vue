@@ -126,7 +126,7 @@ export default {
       required: false,
       default() {
         return {
-          ticketAmount: 0, //金额
+          ticketAmount: 1, //金额
           adjustmentDays: 0, //调整天
           interestDays: 0 //剩余天数
         };
@@ -150,6 +150,7 @@ export default {
       this.myData = newVal;
     },
     kou1(newVal) {
+      // console.log("newVal", newVal);
       this.myData.calcKou = newVal;
     }
   },
@@ -228,6 +229,7 @@ export default {
         this.needData.interestDays === 0 ? 1 : this.needData.interestDays
       );
       handleCharge = parseFloat(handleCharge);
+      // console.log(ticketAmount, nianXi, interestDays, handleCharge);
       const result =
         ((ticketAmount * nianXi * interestDays) / 360 +
           (handleCharge * ticketAmount) / 100000) /

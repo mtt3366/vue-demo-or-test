@@ -36,6 +36,10 @@ const childrenRouteConfig = [
   {
     name: "MutiSetMsgDilg",
     desc: "批量设置"
+  },
+  {
+    name: "LookMsg",
+    desc: "查看设置"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({

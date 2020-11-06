@@ -49,11 +49,19 @@
       </div>
       <div class="row">
         拟售价
-        <tick-price-toggle-input v-model="myData.sellTickPrice" :showZk="false" :showKou="false" />
+        <tick-price-toggle-input
+          v-model="myData.sellTickPrice"
+          :showZk="false"
+          :showKou="false"
+        />
       </div>
       <div class="row">
         购入价
-        <tick-price-toggle-input v-model="myData.buyTickPrice" :showZk="false" :showKou="false" />
+        <tick-price-toggle-input
+          v-model="myData.buyTickPrice"
+          :showZk="false"
+          :showKou="false"
+        />
       </div>
       <div class="row">
         票源客户
@@ -115,7 +123,8 @@ const initMutiSetData = {
 
     directDeduction: "", //拟售价直扣 1
 
-    pointDay: "" //拟售价5 年息加天数中的天数}}
+    pointDay: "", //拟售价5 年息加天数中的天数}}
+    calcKou: null
   },
   buyTickPrice: {
     type: 2, //类型 1,2,3,4(无),5
@@ -126,7 +135,8 @@ const initMutiSetData = {
 
     directDeduction: "", //直扣 1
 
-    pointDay: "" //5 年息加天数中的天数}}
+    pointDay: "", //5 年息加天数中的天数}}
+    calcKou: null
   },
   ticketClient: "", //票源客户
   capitalType: "1", //'1','0'
