@@ -122,7 +122,7 @@ export default {
     },
     needData: {
       type: Object,
-      required: true,
+      required: false,
       default() {
         return {
           ticketAmount: 0, //金额

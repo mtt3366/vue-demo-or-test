@@ -1,11 +1,12 @@
 <template>
   <tick-price-toggle-input
-    v-model="tickPrice"
     :need-data="{
       ticketAmount: 11.9021,
       adjustmentDays: 0,
       interestDays: 366
     }"
+    :value="tickPrice"
+    @input="tickPrice = $event"
     :showZk="true"
     :showKou="true"
   />
