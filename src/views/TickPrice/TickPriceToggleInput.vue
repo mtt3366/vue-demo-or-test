@@ -100,7 +100,8 @@ export default {
 
           directDeduction: "", //拟售价直扣 1
 
-          pointDay: "" //拟售价5 年息加天数中的天数}}
+          pointDay: "", //拟售价5 年息加天数中的天数}}
+          calcKou: null //每十万扣
         };
       }
     },
@@ -147,6 +148,9 @@ export default {
   watch: {
     value(newVal) {
       this.myData = newVal;
+    },
+    kou1(newVal) {
+      this.myData.calcKou = newVal;
     }
   },
   data() {
@@ -223,6 +227,7 @@ export default {
       const interestDays = parseFloat(
         this.needData.interestDays === 0 ? 1 : this.needData.interestDays
       );
+      handleCharge = parseFloat(handleCharge);
       const result =
         ((ticketAmount * nianXi * interestDays) / 360 +
           (handleCharge * ticketAmount) / 100000) /
@@ -295,7 +300,7 @@ export default {
     }
   },
   mounted() {
-    if (!this.showZk) {
+    if (!this.showZk || (this.showZk && this.needData.ticketAmount > 10)) {
       this.reverseMap = {
         2: 3,
         3: 5,
