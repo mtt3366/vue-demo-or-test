@@ -109,7 +109,7 @@ export default {
       type: Boolean,
       required: false,
       default() {
-        return false;
+        return true;
       }
     },
     showKou: {
@@ -117,7 +117,7 @@ export default {
       type: Boolean,
       required: false,
       default() {
-        return false;
+        return true;
       }
     },
     needData: {
@@ -142,6 +142,11 @@ export default {
       } else {
         return 0;
       }
+    }
+  },
+  watch: {
+    value(newVal) {
+      this.myData = newVal;
     }
   },
   data() {

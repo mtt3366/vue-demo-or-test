@@ -49,11 +49,11 @@
       </div>
       <div class="row">
         拟售价
-        <tick-price-toggle-input v-model="myData.sellTickPrice" />
+        <tick-price-toggle-input v-model="myData.sellTickPrice" :showZk="false" :showKou="false" />
       </div>
       <div class="row">
         购入价
-        <tick-price-toggle-input v-model="myData.buyTickPrice" />
+        <tick-price-toggle-input v-model="myData.buyTickPrice" :showZk="false" :showKou="false" />
       </div>
       <div class="row">
         票源客户
@@ -96,7 +96,44 @@
 
 <script>
 import TickPriceToggleInput from "../TickPrice/TickPriceToggleInput";
+function copyObj(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+const initMutiSetData = {
+  buyUserId: null, //入库人id
+  sellUserId: null, //挂票人id
+  buyUserName: null, //入库人
+  sellUserName: null, //挂票人
+  //初始化自定义的拟售价
+  sellTickPrice: {
+    //拟售价三种方式
+    type: 2, //拟售价类型 1,2,3,4(无),5
+    lakhDebit: "", //拟售价每十万扣款2
 
+    point: "", //拟售价年息+手续费 3
+    handleCharge: "", //手续费
+
+    directDeduction: "", //拟售价直扣 1
+
+    pointDay: "" //拟售价5 年息加天数中的天数}}
+  },
+  buyTickPrice: {
+    type: 2, //类型 1,2,3,4(无),5
+    lakhDebit: "", //每十万扣款2
+
+    point: "", //年息+手续费 3
+    handleCharge: "", //手续费
+
+    directDeduction: "", //直扣 1
+
+    pointDay: "" //5 年息加天数中的天数}}
+  },
+  ticketClient: "", //票源客户
+  capitalType: "1", //'1','0'
+
+  commons: "", //备注
+  internalCommons: "" //内部记事
+};
 export default {
   name: "MutiSetMsgDilg", // todo
   components: { TickPriceToggleInput },
@@ -112,41 +149,7 @@ export default {
   data() {
     return {
       myVisible: false,
-      myData: {
-        buyUserId: null, //入库人id
-        sellUserId: null, //挂票人id
-        buyUserName: null, //入库人
-        sellUserName: null, //挂票人
-        //初始化自定义的拟售价
-        sellTickPrice: {
-          //拟售价三种方式
-          type: 2, //拟售价类型 1,2,3,4(无),5
-          lakhDebit: "", //拟售价每十万扣款2
-
-          point: "", //拟售价年息+手续费 3
-          handleCharge: "", //手续费
-
-          directDeduction: "", //拟售价直扣 1
-
-          pointDay: "" //拟售价5 年息加天数中的天数}}
-        },
-        buyTickPrice: {
-          type: 2, //类型 1,2,3,4(无),5
-          lakhDebit: "", //每十万扣款2
-
-          point: "", //年息+手续费 3
-          handleCharge: "", //手续费
-
-          directDeduction: "", //直扣 1
-
-          pointDay: "" //5 年息加天数中的天数}}
-        },
-        ticketClient: "", //票源客户
-        capitalType: "1", //'1','0'
-
-        commons: "", //备注
-        internalCommons: "" //内部记事
-      },
+      myData: initMutiSetData,
       persionOp: []
     };
   },
@@ -155,7 +158,7 @@ export default {
     visible(newValue) {
       console.log("newValue", newValue);
       this.myVisible = newValue;
-      this.cur = true; //每次都打开数字那一面
+      this.myData = copyObj(initMutiSetData);
     }
   },
   methods: {
