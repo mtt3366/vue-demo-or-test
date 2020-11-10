@@ -40,6 +40,10 @@ const childrenRouteConfig = [
   {
     name: "LookMsg",
     desc: "查看设置"
+  },
+  {
+    name: "MyTab",
+    desc: "Tab"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
