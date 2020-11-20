@@ -19,7 +19,27 @@ export default {
       tabCur: 1
     };
   },
-  methods: {}
+  methods: {
+    sleep(duration = 0) {
+      return new Promise(resolve => {
+        setTimeout(resolve, duration);
+      });
+    },
+    async postTicketList2() {
+      await this.sleep(1000);
+      return {
+        id: 1
+      };
+    }
+  },
+  async mounted() {
+    let arr = [];
+    for (let i = 0; i < 3; i++) {
+      const x = await this.postTicketList2();
+      arr.push(x);
+    }
+    console.log(arr);
+  }
 };
 </script>
 
