@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import Demo from "./Demo"; // todo
+import Demo from "./Father.vue";
 export default {
-  name: "TemplateDemo", // todo
+  name: "ComVModelStudy",
   components: {
-    Demo // todo
+    Demo
   }
 };
 </script>
