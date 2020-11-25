@@ -16,6 +16,10 @@ const childrenRouteConfig = [
   {
     name: "AntdUse",
     desc: "antd使用测试"
+  },
+  {
+    name: "VelocityUse",
+    desc: "velocity使用测试"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
