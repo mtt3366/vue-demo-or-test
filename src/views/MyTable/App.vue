@@ -1,5 +1,5 @@
 <template>
-  <MyTable v-bind="tableProps" :test="'testAttr'" />
+  <MyTable v-bind="tableProps" :test="'testAttr'" v-bind:title.sync="title" />
 </template>
 
 <script>
@@ -15,7 +15,8 @@ export default {
         loading: false,
         height: "100px",
         dataSource: ["1123", "2341412", "12342"]
-      }
+      },
+      title: "我是title"
     };
   }
 };
