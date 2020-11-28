@@ -48,6 +48,10 @@ const childrenRouteConfig = [
   {
     name: "MyTab",
     desc: "Tab"
+  },
+  {
+    name: "MyTable",
+    desc: "MyTable"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
