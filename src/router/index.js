@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Index from "../views/Index.vue";
 import { toLineLink } from "@/utils";
 Vue.use(VueRouter);
 
@@ -52,6 +53,10 @@ const childrenRouteConfig = [
   {
     name: "MyTable",
     desc: "MyTable"
+  },
+  {
+    name: "AttrListener",
+    desc: "$attrs和$listeners用法"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
@@ -65,8 +70,18 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-    children: childrenRoute
+    redirect: "/index",
+    children: [
+      {
+        path: "index",
+        name: "Index",
+        component: Index,
+        meta: { desc: "首页展示" }
+      },
+      ...childrenRoute
+    ]
   }
+
   // {
   //   path: "/about",
   //   name: "About",
