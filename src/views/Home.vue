@@ -1,7 +1,12 @@
 <template>
   <div class="body-wrap">
     <nav class="">
-      <div v-for="(link, index) in routerLinks" :key="index">
+      <div
+        v-for="(link, index) in routerLinks"
+        :key="index"
+        :class="{ focus: cur === index }"
+        @click="cur = index"
+      >
         {{ index + 1 }}.
         <router-link :to="link.path">{{ link.desc }}</router-link>
       </div>
@@ -19,6 +24,7 @@ export default {
   name: "Home",
   data() {
     return {
+      cur: 0,
       routerLinks: []
     };
   },
@@ -54,6 +60,12 @@ https://www.ruanyifeng.com/blog/2015/07/flex-examples.html
 .body-wrap {
   display: flex;
   min-height: 100vh;
+  .focus {
+    color: #ff7700;
+    a {
+      color: #ff7700;
+    }
+  }
   nav {
     flex: 0 0 12em;
     min-height: 100vh;
