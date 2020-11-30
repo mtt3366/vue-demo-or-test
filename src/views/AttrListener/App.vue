@@ -1,13 +1,13 @@
 <template>
-  <AttrListener />
+  <A />
 </template>
 
 <script>
-import AttrListener from "./AttrListener"; // todo
+import A from "./A"; // todo
 export default {
   name: "AttrListenerMain", // todo
   components: {
-    AttrListener // todo
+    A // todo
   }
 };
 </script>
