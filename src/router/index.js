@@ -57,6 +57,10 @@ const childrenRouteConfig = [
   {
     name: "AttrListener",
     desc: "$attrs和$listeners用法"
+  },
+  {
+    name: "UseDirective",
+    desc: "自定义一个让背景变绿色的指令"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
