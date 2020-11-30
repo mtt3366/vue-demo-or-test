@@ -39,9 +39,9 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route); //当前路由的信息
-    console.log(this.$router); //所有路由的信息
-    console.log(this.getAllHomeChildRoute());
+    // console.log(this.$route); //当前路由的信息
+    // console.log(this.$router); //所有路由的信息
+    // console.log(this.getAllHomeChildRoute());
     this.routerLinks = this.getRouterLinks();
   }
 };
