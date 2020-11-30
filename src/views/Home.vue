@@ -4,8 +4,8 @@
       <div
         v-for="(link, index) in routerLinks"
         :key="index"
-        :class="{ focus: cur === index }"
-        @click="cur = index"
+        :class="{ focus: cur === link.path }"
+        @click="cur = link.path"
       >
         {{ index + 1 }}.
         <router-link :to="link.path">{{ link.desc }}</router-link>
@@ -24,7 +24,7 @@ export default {
   name: "Home",
   data() {
     return {
-      cur: 0,
+      cur: "/" + this.$route.name,
       routerLinks: []
     };
   },
