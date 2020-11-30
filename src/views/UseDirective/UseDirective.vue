@@ -3,6 +3,7 @@
     <input v-focus placeholder="局部指令,刷新就自动聚焦" />
     <div id="hook-arguments-example" v-demo:foo.a.b="message"></div>
     <div v-color-swatch="bgColor">bgColor-red</div>
+    <div v-change-bgcolor="'green'">bgColor-green</div>
   </div>
 </template>
 
