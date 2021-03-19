@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Index from "../views/Index.vue";
 import { toLineLink } from "@/utils";
 Vue.use(VueRouter);
 
@@ -16,6 +17,10 @@ const childrenRouteConfig = [
   {
     name: "AntdUse",
     desc: "antd使用测试"
+  },
+  {
+    name: "VelocityUse",
+    desc: "velocity使用测试"
   },
   {
     name: "ComStudy",
@@ -44,6 +49,18 @@ const childrenRouteConfig = [
   {
     name: "MyTab",
     desc: "Tab"
+  },
+  {
+    name: "MyTable",
+    desc: "MyTable"
+  },
+  {
+    name: "AttrListener",
+    desc: "$attrs和$listeners用法"
+  },
+  {
+    name: "UseDirective",
+    desc: "自定义一个让背景变绿色的指令"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
@@ -57,8 +74,18 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-    children: childrenRoute
+    redirect: "/index",
+    children: [
+      {
+        path: "index",
+        name: "Index",
+        component: Index,
+        meta: { desc: "首页展示" }
+      },
+      ...childrenRoute
+    ]
   }
+
   // {
   //   path: "/about",
   //   name: "About",
