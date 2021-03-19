@@ -61,6 +61,14 @@ const childrenRouteConfig = [
   {
     name: "UseDirective",
     desc: "自定义一个让背景变绿色的指令"
+  },
+  {
+    name: "MyRow",
+    desc: "MyRow"
+  },
+  {
+    name: "CheckBox",
+    desc: "CheckBox"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
