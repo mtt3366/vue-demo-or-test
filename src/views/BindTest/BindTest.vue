@@ -1,18 +1,21 @@
 <template>
   <div>
-    <div>
-      <div @click="$emit('update:title', title + 'add')">{{ title }}</div>
-      <div v-bind="$attrs">$attrs测试</div>
-      <div v-bind="$props">$props测试</div>
-    </div>
+    {{ `v-bind 组件测试` }}
+
+    <h1>
+      结论: v-bind 只是相当于...obj,把obj的键值对,写在html 属性上
+      <br />
+      v-bind="$attrs" 和 v-bind="$props"
+      ,只是分别把属性和props传入子组件(或者写在原生html上,很少用)
+    </h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: "MyTable",
+  name: "BindTest",
   components: {},
-  props: ["loading", "height", "dataSource", "title"],
+  props: ["myProp", "myProp2"],
   data() {
     return {};
   },

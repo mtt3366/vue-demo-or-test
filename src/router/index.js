@@ -51,8 +51,9 @@ const childrenRouteConfig = [
     desc: "Tab"
   },
   {
-    name: "MyTable",
-    desc: "MyTable"
+    name: "BindTest",
+    desc:
+      'v-bind="tableProps",$attrs ,$props,v-bind="$attrs",v-bind="$props"用法,v-bind:title.sync="doc.title"用法'
   },
   {
     name: "AttrListener",
