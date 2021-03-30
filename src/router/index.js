@@ -70,6 +70,10 @@ const childrenRouteConfig = [
   {
     name: "CheckBox",
     desc: "CheckBox"
+  },
+  {
+    name: "CtrlInput",
+    desc: "一个可控的Input组件"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
