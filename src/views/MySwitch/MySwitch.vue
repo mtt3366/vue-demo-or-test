@@ -1,18 +1,16 @@
 <template>
-  <div class="my-switch" @click="open = !open">
+  <div class="my-switch" @click.prevent="switchValue">
     <input
       class="my-switch__input"
       type="checkbox"
       @change="handleChange"
       ref="input"
-      :id="id"
-      :name="name"
       :true-value="activeValue"
       :false-value="inactiveValue"
     />
-    <span :class="{ line: true, on: open, off: !open }"> </span>
-    <span :class="{ slider: true, on: open, off: !open }">{{
-      open ? "ON" : "OFF"
+    <span :class="{ line: true, on: checked, off: !checked }"> </span>
+    <span :class="{ slider: true, on: checked, off: !checked }">{{
+      checked ? "ON" : "OFF"
     }}</span>
   </div>
 </template>
@@ -20,16 +18,53 @@
 <script>
 export default {
   name: "MySwitch",
+  props: {
+    value: {
+      type: [Boolean, String, Number],
+      default: false
+    },
+    activeValue: {
+      type: [Boolean, String, Number],
+      default: true
+    },
+    inactiveValue: {
+      type: [Boolean, String, Number],
+      default: false
+    }
+  },
   data() {
-    return {
-      open: true,
-      activeValue: "",
-      inactiveValue: ""
-    };
+    return {};
+  },
+  computed: {
+    checked() {
+      //是否被选中,用传进来的value 和 activeValue来比较,不一样就是没被选中
+      return this.value === this.activeValue;
+    }
+  },
+  watch: {
+    checked() {
+      //改变原生的checked value
+      this.$refs.input.checked = this.checked;
+    }
   },
 
   methods: {
-    handleChange() {}
+    switchValue() {
+      this.handleChange();
+    },
+    handleChange() {
+      const val = this.checked ? this.inactiveValue : this.activeValue; //取反操作
+      this.$emit("input", val);
+      this.$emit("change", val);
+      this.$nextTick(() => {
+        // set input's checked property
+        // in case parent refuses to change component's value
+        this.$refs.input.checked = this.checked;
+      });
+    }
+  },
+  mounted() {
+    this.$refs.input.checked = this.checked;
   }
 };
 </script>

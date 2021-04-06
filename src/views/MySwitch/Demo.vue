@@ -1,6 +1,8 @@
 <template>
   <div>
-    <MySwitch> </MySwitch>
+    <MySwitch v-model="check" :active-value="'ON'" :inactive-value="'OFF'">
+    </MySwitch>
+    {{ check }}
   </div>
 </template>
 
@@ -8,7 +10,12 @@
 import MySwitch from "./MySwitch";
 export default {
   name: "Demo", // todo
-  components: { MySwitch }
+  components: { MySwitch },
+  data() {
+    return {
+      check: "ON"
+    };
+  }
 };
 </script>
 
