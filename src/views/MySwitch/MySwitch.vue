@@ -19,7 +19,7 @@
 export default {
   name: "MySwitch",
   props: {
-    value: {
+    value: {//当我想可控的时候,直接使用value和input即可
       type: [Boolean, String, Number],
       default: false
     },
