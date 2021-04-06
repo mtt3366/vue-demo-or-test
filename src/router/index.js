@@ -74,6 +74,10 @@ const childrenRouteConfig = [
   {
     name: "CtrlInput",
     desc: "一个可控的Input组件"
+  },
+  {
+    name: "MySwitch",
+    desc: "Switch组件"
   }
 ];
 const childrenRoute = childrenRouteConfig.map(({ name, desc }) => ({
